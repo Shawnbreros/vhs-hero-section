@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +32,9 @@
       position: relative;
       z-index: 2;
       max-width: 700px;
-      background-color: rgba(0, 0, 128, 0.6); /* Navy blue with 60% opacity */
+      background-color: rgba(50, 50, 50, 0.7);
       color: #fff;
-      padding: 30px 60px 30px 30px; /* Extra padding on the right for symmetry */
+      padding: 30px 60px 30px 30px;
       border: 3pt solid #fff;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -43,12 +42,14 @@
     h1 {
       margin-top: 0;
       font-size: 32px;
+      text-align: center;
     }
     p {
       font-size: 18px;
       margin: 10px 0 20px;
+      text-align: center;
     }
-    input, button {
+    input {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
@@ -56,23 +57,85 @@
       border-radius: 6px;
       border: none;
     }
-    label {
+    .disclaimer {
+      text-align: center;
       font-size: 14px;
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .disclaimer label {
+      display: inline-block;
+      text-align: left;
+      max-width: 600px;
+    }
+    button {
+      background-color: #00bcd4;
+      color: #fff;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      padding: 14px 24px;
+      font-size: 18px;
+      width: auto;
+      display: block;
+      margin: 24px auto 16px;
+      border-radius: 8px;
+      border: 2px solid #fff;
+    }
+    button:hover {
+      background-color: #0097a7;
     }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAph155LwPyiddVb3hD2rsswQ0-PWp7bfU&libraries=places"></script>
+  <script>
+    function initAutocomplete() {
+      const addressInput = document.querySelector("input[name='address']");
+      if (addressInput) {
+        new google.maps.places.Autocomplete(addressInput, {
+          types: ['address'],
+          componentRestrictions: { country: 'us' }
+        });
+      }
+    }
+
+    function formatPhoneNumber(input) {
+      input.addEventListener('input', () => {
+        let cleaned = input.value.replace(/\D/g, '');
+        if (cleaned.length > 10) cleaned = cleaned.substring(0, 10);
+        const match = cleaned.match(/(\d{3})(\d{3})(\d{0,4})/);
+        if (match) {
+          input.value = `${match[1]}-${match[2]}${match[3] ? '-' + match[3] : ''}`;
+        }
+      });
+    }
+
+    window.addEventListener('load', () => {
+      initAutocomplete();
+      const phoneInput = document.querySelector("input[name='phone']");
+      if (phoneInput) {
+        formatPhoneNumber(phoneInput);
+      }
+    });
+  </script>
 </head>
 <body>
   <div class="hero">
     <div class="overlay"></div>
     <div class="content">
       <h1>Straight Talk. Real Offers. No Games.</h1>
-      <p>We're local, trustworthy, and ready to make a real, no-obligation cash offer for your Reno-Sparks home. No pressure, no closing costs — just simple and straightforward for your peace of mind.</p>
+      <p>We're local, honest, and ready to make a <strong>real, no-obligation</strong> cash offer for your Reno Sparks home.</p>
+      <p>No pressure, no closing costs. Just a simple and straightforward cash purchase for your peace of mind.</p>
       <form>
         <input type="text" name="address" placeholder="Property Address" required>
         <input type="text" name="name" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="tel" name="phone" placeholder="Phone Number" required>
-        <label><input type="checkbox" required> I agree to receive communications from Reno Sparks Cash 4 Homes at the phone number and email provided. Message and data rates may apply. Message frequency varies. Reply STOP to opt out.</label>
+        <input type="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <input type="tel" name="phone" placeholder="Phone Number" pattern="\d{3}[-]\d{3}[-]\d{4}" required>
+        <div class="disclaimer">
+          <label>
+            <input type="checkbox" required>
+            I agree to receive communications from Reno Sparks Cash 4 Homes at the phone number and email provided. Message and data rates may apply. Message frequency varies. Reply STOP to opt out.
+          </label>
+        </div>
         <button type="submit">Get My Cash Offer</button>
       </form>
     </div>
