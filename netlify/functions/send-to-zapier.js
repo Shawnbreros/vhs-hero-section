@@ -8,21 +8,10 @@ export async function handler(event, context) {
     };
   }
 
-  const zapierWebhookURL = 'https://hooks.zapier.com/hooks/catch/11853774/2jjg3r4/';
+  const zapierWebhookURL = process.env.ZAPIER_WEBHOOK_URL;
 
   try {
-    let payload;
-
-    // Check if content type is JSON or form-urlencoded
-    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
-
-    if (contentType.includes('application/json')) {
-      payload = JSON.parse(event.body);
-    } else if (contentType.includes('application/x-www-form-urlencoded')) {
-      payload = Object.fromEntries(new URLSearchParams(event.body));
-    } else {
-      throw new Error('Unsupported Content-Type');
-    }
+    const payload = JSON.parse(event.body);
 
     const response = await fetch(zapierWebhookURL, {
       method: 'POST',
