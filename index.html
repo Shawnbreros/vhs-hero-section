@@ -12,6 +12,7 @@
     }
     .hero {
       background-image: url('A_high-resolution_photograph_showcases_a_single-st.png');
+      background-color: #333;
       background-size: cover;
       background-position: center;
       position: relative;
@@ -73,7 +74,7 @@
       background-color: #00bcd4;
       color: #fff;
       font-weight: bold;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
       padding: 14px 24px;
       font-size: 18px;
       width: auto;
@@ -81,9 +82,16 @@
       margin: 24px auto 16px;
       border-radius: 8px;
       border: 2px solid #fff;
+      cursor: pointer;
     }
     button:hover {
       background-color: #0097a7;
+      transform: scale(1.02);
+    }
+    @media (max-width: 480px) {
+      .thank-you-message li {
+        font-size: 18px;
+      }
     }
   </style>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAph155LwPyiddVb3hD2rsswQ0-PWp7bfU&libraries=places"></script>
@@ -123,13 +131,11 @@
     <div class="overlay"></div>
     <div class="content">
       <h1>Straight Talk. Real Offers. No Games.</h1>
-      <p>We're local, honest, and ready to make a <strong>real, no-obligation</strong> cash offer for your Reno Sparks home.</p>
-      <p>No pressure, no closing costs. Just a simple and straightforward cash purchase for your peace of mind.</p>
       <form>
-        <input type="text" name="address" placeholder="Property Address You're Thinking About Selling" required>
-        <input type="text" name="name" placeholder="Full Name (Who Should We Talk To)" required>
-        <input type="tel" name="phone" placeholder="Phone Number" pattern="\d{3}[-]\d{3}[-]\d{4}" required>
-        <input type="email" name="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <input type="text" name="address" aria-label="Property Address" placeholder="Property Address You're Thinking About Selling" required>
+        <input type="text" name="name" aria-label="Full Name" placeholder="Full Name (Who Should We Talk To)" required>
+        <input type="tel" name="phone" aria-label="Phone Number" placeholder="Phone Number" pattern="\d{3}[-]\d{3}[-]\d{4}" required>
+        <input type="email" name="email" aria-label="Email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
         <div class="disclaimer">
           <label>
             <input type="checkbox" required>
@@ -138,7 +144,7 @@
         </div>
         <button type="submit">Get My Cash Offer</button>
       </form>
-      <div class="thank-you-message" style="display: none; text-align: center;">
+      <div class="thank-you-message" style="display: none; text-align: center; padding: 20px;">
         <h2>Thanks for reaching out!</h2>
         <p>We’ve received your information and our team is working quick to review your property.</p>
         <p>⏱️ <strong>What happens next?</strong></p>
