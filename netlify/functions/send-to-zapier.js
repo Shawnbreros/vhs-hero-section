@@ -10,8 +10,18 @@ export async function handler(event, context) {
 
   const zapierWebhookURL = process.env.ZAPIER_WEBHOOK_URL;
 
+  let payload;
+
   try {
-    const payload = JSON.parse(event.body);
+    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
+
+    if (contentType.includes('application/json')) {
+      payload = JSON.parse(event.body);
+    } else if (contentType.includes('application/x-www-form-urlencoded')) {
+      payload = Object.fromEntries(new URLSearchParams(event.body));
+    } else {
+      throw new Error(`Unsupported content type: ${contentType}`);
+    }
 
     const response = await fetch(zapierWebhookURL, {
       method: 'POST',
