@@ -1,49 +1,63 @@
-// /netlify/functions/send-to-zapier.js
+// send-to-zapier.js (updated with name/address split and ZIP extraction)
 
-export async function handler(event, context) {
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: 'Method Not Allowed' }),
-    };
-  }
+const fetch = require('node-fetch');
 
-  const zapierWebhookURL = process.env.ZAPIER_WEBHOOK_URL;
+exports.handler = async (event) => {
+  const body = new URLSearchParams(event.body);
 
-  let payload;
+  const fullName = body.get("name") || "";
+  const address = body.get("address") || "";
+
+  // --- Split Full Name ---
+  const [firstName, ...lastParts] = fullName.trim().split(" ");
+  const lastName = lastParts.join(" ");
+
+  // --- Split Address ---
+  const addressParts = address.split(',').map(part => part.trim());
+  const street = addressParts[0] || "";
+  const city = addressParts[1] || "";
+  const stateZip = addressParts[2] || "";
+
+  const [state, zip] = stateZip.split(" ").filter(Boolean);
+
+  const phone = body.get("phone") || "";
+  const email = body.get("email") || "";
+  const timestamp = new Date().toISOString();
+
+  const payload = {
+    firstName,
+    lastName,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    email,
+    timestamp,
+    source: "Hero Form"
+  };
 
   try {
-    const contentType = event.headers['content-type'] || event.headers['Content-Type'];
-
-    if (contentType.includes('application/json')) {
-      payload = JSON.parse(event.body);
-    } else if (contentType.includes('application/x-www-form-urlencoded')) {
-      payload = Object.fromEntries(new URLSearchParams(event.body));
-    } else {
-      throw new Error(`Unsupported content type: ${contentType}`);
-    }
-
-    const response = await fetch(zapierWebhookURL, {
-      method: 'POST',
+    const response = await fetch(process.env.ZAPIER_WEBHOOK_URL, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-      throw new Error(`Zapier response not OK: ${response.statusText}`);
+      throw new Error(`Zapier responded with status ${response.status}`);
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Success' }),
+      body: JSON.stringify({ message: "Success" })
     };
   } catch (error) {
-    console.error('Error sending to Zapier:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error sending to Zapier', error: error.message }),
+      body: JSON.stringify({ message: "Error sending to Zapier", error: error.message })
     };
   }
-}
+};
