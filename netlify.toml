@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/terms"
-  to = "/terms-of-service.html"
+  to = "/terms.html"
   status = 200
 
 [[redirects]]
