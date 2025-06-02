@@ -28,14 +28,13 @@
       }
     }
     .overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
     .content {
       position: relative;
@@ -109,3 +108,96 @@
       }
     }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAph155LwPyiddVb3hD2rsswQ0-PWp7bfU&libraries=places"></script>
+  <script>
+    function initAutocomplete() {
+      const addressInput = document.querySelector("input[name='address']");
+      if (addressInput) {
+        new google.maps.places.Autocomplete(addressInput, {
+          types: ['address'],
+          componentRestrictions: { country: 'us' }
+        });
+      }
+    }
+
+    function formatPhoneNumber(input) {
+      input.addEventListener('input', () => {
+        let cleaned = input.value.replace(/\D/g, '');
+        if (cleaned.length > 10) cleaned = cleaned.substring(0, 10);
+        const match = cleaned.match(/(\d{3})(\d{3})(\d{0,4})/);
+        if (match) {
+          input.value = `${match[1]}-${match[2]}${match[3] ? '-' + match[3] : ''}`;
+        }
+      });
+    }
+
+    window.addEventListener('load', () => {
+      initAutocomplete();
+      const phoneInput = document.querySelector("input[name='phone']");
+      if (phoneInput) {
+        formatPhoneNumber(phoneInput);
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1>Straight Talk. Real Offers. No Games.</h1>
+      <p class="form-subheading">We're local, honest, and ready to make a <strong>real, no-obligation</strong> cash offer for your Reno Sparks home.</p>
+      <p class="form-subheading">No pressure, no closing costs. Just a simple and straightforward cash purchase for your peace of mind.</p>
+      <form>
+        <input type="text" name="address" aria-label="Property Address" placeholder="Property Address You're Thinking About Selling" required>
+        <input type="text" name="name" aria-label="Full Name" placeholder="Full Name (Who Should We Talk To)" required>
+        <input type="tel" name="phone" aria-label="Phone Number" placeholder="Phone Number" pattern="\d{3}[-]\d{3}[-]\d{4}" required>
+        <input type="email" name="email" aria-label="Email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <div class="disclaimer">
+          <label>
+            <input type="checkbox" required>
+            I agree to receive communications from Vantage Home Solutions LLC DBA Reno Sparks Cash 4 Homes at the phone number and email provided. Message frequency varies. Message and data rates may apply. Reply "STOP" to opt out. View our <a href="/privacy" target="_blank">Privacy Policy</a>.
+          </label>
+        </div>
+        <button type="submit">Get My Cash Offer</button>
+      </form>
+      <div class="thank-you-message" style="display: none; text-align: center; padding: 20px;">
+        <h2>Thanks for reaching out!</h2>
+        <p>We’ve received your information and our team is working quick to review your property.</p>
+        <p>⏱️ <strong>What happens next?</strong></p>
+        <ul style="list-style: none; padding: 0; font-size: 16px;">
+          <li>🔍 We’ll do a quick property review.</li>
+          <li>💬 You'll receive a quick text to confirm you actually sent your info.</li>
+          <li>(Sometimes people prank friends)</li>
+          <li>📞 We’ll usually call within an hour or two to confirm some info about the home.</li>
+          <li>💰 You’ll receive your no-obligation cash offer within 24 hours.</li>
+          <li>🗓️ If you accept, we’ll work on your timeline — fast close or flexible terms.</li>
+          <li>🧾 We cover closing costs. No fees. No games.</li>
+        </ul>
+        <p>We appreciate the opportunity to make you a fast, fair offer. Talk soon!</p>
+        <p style="text-align: center;">Got questions? Call us anytime at <a href="tel:7754146440" style="color: #00bcd4;">775-414-6440</a>.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    const form = document.querySelector('form');
+    const thankYouMessage = document.querySelector('.thank-you-message');
+    const subheadings = document.querySelectorAll('.form-subheading');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch('/.netlify/functions/send-to-zapier', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+      });
+      if (response.ok) {
+        form.style.display = 'none';
+        subheadings.forEach(el => el.style.display = 'none');
+        thankYouMessage.style.display = 'block';
+      } else {
+        alert("Oops! Something went wrong. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
