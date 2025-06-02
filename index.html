@@ -7,7 +7,7 @@
 
   <!-- ✅ Preload Critical Images -->
   <link rel="preload" as="image" href="/hero-desktop.webp" type="image/webp">
-  <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp">
+  <link rel="preload" as="image" href="/hero-mobile-light.webp" type="image/webp">
 
   <!-- ✅ Defer Non-Critical CSS -->
   <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
@@ -43,7 +43,7 @@
     }
     @media (max-width: 768px) {
       .hero {
-        background-image: url('/hero-mobile.webp');
+        background-image: url('/hero-mobile-light.webp');
         height: auto;
         min-height: unset;
         max-height: unset;
