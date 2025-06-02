@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <header>
+  <picture>
+    <source srcset="/images/hero-desktop.webp" media="(min-width: 768px)" type="image/webp">
+    <source srcset="/images/hero-mobile.webp" type="image/webp">
+    <img
+      src="/images/hero-mobile.jpg"
+      alt="Mid-century home in Reno"
+      loading="eager"
+      fetchpriority="high"
+    >
+  </picture>
+  <h1>Straight Talk, Real Offers, No Games</h1>
+  <p>We're local, honest, and ready to make a real, no-obligation cash offer for your Reno-Sparks home.</p>
+  <!-- Your lead form would go below here -->
+</header>
   <title>Reno Sparks Cash 4 Homes - Hero Section</title>
   <style>
     body {
