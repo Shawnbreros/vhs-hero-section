@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="preload" as="image" href="/images/hero-desktop.webp" type="image/webp">
-  <link rel="preload" as="image" href="/images/hero-mobile.webp" type="image/webp">
-  <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
-  <noscript><link rel="stylesheet" href="/css/styles.css"></noscript>
   <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,15 +9,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      color: #333;
-    }
-    header {
-      text-align: center;
-    }
-    picture img {
-      width: 100%;
-      height: auto;
-      display: block;
+      color: #fff;
     }
     .hero {
       background-image: url('/hero-desktop.webp');
@@ -154,21 +142,6 @@
   </script>
 </head>
 <body>
-  <header>
-    <picture>
-      <source srcset="/images/hero-desktop.webp" media="(min-width: 768px)" type="image/webp">
-      <source srcset="/images/hero-mobile.webp" type="image/webp">
-      <img
-        src="/images/hero-mobile.jpg"
-        alt="Mid-century home in Reno"
-        loading="eager"
-        fetchpriority="high"
-      >
-    </picture>
-    <h1>Straight Talk, Real Offers, No Games</h1>
-    <p>We're local, honest, and ready to make a real, no-obligation cash offer for your Reno-Sparks home.</p>
-    <!-- Lead form and other content here -->
-  </header>
   <div class="hero">
     <div class="overlay"></div>
     <div class="content">
