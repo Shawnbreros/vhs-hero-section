@@ -7,7 +7,7 @@
 
   <!-- ✅ Preload Critical Images -->
   <link rel="preload" as="image" href="/hero-desktop.webp" type="image/webp">
-  <link rel="preload" as="image" href="/hero-mobile-light.webp" type="image/webp">
+  <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp">
 
   <!-- ✅ Defer Non-Critical CSS -->
   <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
@@ -33,15 +33,17 @@
       background-position: center;
       background-repeat: no-repeat;
       position: relative;
-      min-height: 100dvh;
+      height: 100vh;
+      max-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      overflow-y: auto;
     }
     @media (max-width: 768px) {
       .hero {
-        background-image: url('/hero-mobile-light.webp');
+        background-image: url('/hero-mobile.webp');
       }
     }
     .overlay {
