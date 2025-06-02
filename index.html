@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reno Sparks Cash 4 Homes - Hero Section</title>
+
   <!-- ✅ Preload Critical Images -->
   <link rel="preload" as="image" href="/hero-desktop.webp" type="image/webp">
-  <link rel="preload" as="image" href="/hero-mobile.webp" type="image/webp">
+  <link rel="preload" as="image" href="/hero-mobile-light.webp" type="image/webp">
 
   <!-- ✅ Defer Non-Critical CSS -->
   <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
   <noscript><link rel="stylesheet" href="/css/styles.css"></noscript>
+
+  <!-- ✅ Inline Critical CSS -->
   <style>
     body {
       margin: 0;
@@ -28,10 +31,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
     @media (max-width: 768px) {
       .hero {
-        background-image: url('/hero-mobile.webp');
+        background-image: url('/hero-mobile-light.webp');
       }
     }
     .overlay {
@@ -47,58 +51,42 @@
       position: relative;
       z-index: 2;
       max-width: 700px;
-      background-color: rgba(50, 50, 50, 0.7);
+      background-color: rgba(50, 50, 50, 0.8);
       color: #fff;
-      padding: 30px 60px 30px 30px;
-      border: 3pt solid #fff;
+      padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     }
     h1 {
-      margin-top: 0;
       font-size: 32px;
       text-align: center;
+      margin-top: 0;
     }
-    p {
+    p.form-subheading {
       font-size: 18px;
-      margin: 10px 0 20px;
       text-align: center;
+      margin: 12px 0;
     }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, button {
       font-size: 16px;
+      padding: 12px;
       border-radius: 6px;
       border: none;
     }
-    .disclaimer {
-      text-align: center;
-      font-size: 14px;
-      margin-top: 16px;
-      display: flex;
-      justify-content: center;
-    }
-    .disclaimer label {
-      display: inline-block;
-      text-align: left;
-      max-width: 600px;
-    }
-    .disclaimer a {
-      color: #b87333;
-      text-decoration: underline;
+    input {
+      background: #fff;
+      color: #333;
     }
     button {
       background-color: #00bcd4;
       color: #fff;
       font-weight: bold;
       transition: background-color 0.3s ease, transform 0.2s ease;
-      padding: 14px 24px;
-      font-size: 18px;
-      width: auto;
-      display: block;
-      margin: 24px auto 16px;
-      border-radius: 8px;
       border: 2px solid #fff;
       cursor: pointer;
     }
@@ -106,8 +94,18 @@
       background-color: #0097a7;
       transform: scale(1.02);
     }
+    .disclaimer {
+      font-size: 14px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .disclaimer a {
+      color: #b87333;
+      text-decoration: underline;
+    }
     .thank-you-message ul {
-      line-height: 1.8;
+      line-height: 1.6;
+      padding-left: 20px;
     }
     @media (max-width: 480px) {
       .thank-you-message li {
@@ -162,7 +160,7 @@
         <div class="disclaimer">
           <label>
             <input type="checkbox" required>
-            I agree to receive communications from Vantage Home Solutions LLC DBA Reno Sparks Cash 4 Homes at the phone number and email provided. Message frequency varies. Message and data rates may apply. Reply "STOP" to opt out. View our <a href="/privacy" target="_blank">Privacy Policy</a>.
+            I agree to receive communications from Vantage Home Solutions LLC DBA Reno Sparks Cash 4 Homes. Msg & data rates may apply. Reply "STOP" to opt out. View our <a href="/privacy" target="_blank">Privacy Policy</a>.
           </label>
         </div>
         <button type="submit">Get My Cash Offer</button>
