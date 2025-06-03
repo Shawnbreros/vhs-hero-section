@@ -174,11 +174,12 @@
 </head>
 <body>
   <div class="hero">
-    <!-- ✅ Responsive Image for LCP with Native Picture Element -->
-<picture>
-  <source media="(max-width: 768px)" srcset="/hero-mobile-light.webp" type="image/webp">
-  <img src="/hero-desktop-light.webp" width="1200" height="800" alt="Reno Mid-Century Home" loading="eager" fetchpriority="high">
-</picture>
+    <!-- ✅ Inline Mobile Image for LCP on small screens -->
+    <script>
+      if (window.innerWidth <= 768) {
+        document.write('<img src="/hero-mobile-light.webp" alt="Reno Mid-Century Home" loading="eager" fetchpriority="high">');
+      }
+    </script>
     <div class="content">
 </head>
 <body>
