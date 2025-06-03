@@ -6,8 +6,15 @@
   <title>Reno Sparks Cash 4 Homes - Hero Section</title>
 
   <!-- ✅ Preload Critical Images -->
-  <link rel="preload" as="image" href="/hero-desktop.webp" type="image/webp">
-  <link rel="preload" as="image" href="/hero-mobile-light.webp" type="image/webp">
+  <script>
+  const isMobile = window.innerWidth <= 768;
+  const preloadLink = document.createElement('link');
+  preloadLink.rel = 'preload';
+  preloadLink.as = 'image';
+  preloadLink.type = 'image/webp';
+  preloadLink.href = isMobile ? '/hero-mobile-light.webp' : '/hero-desktop-light.webp';
+  document.head.appendChild(preloadLink);
+</script>
 
   <!-- ✅ Defer Non-Critical CSS -->
   <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
@@ -27,7 +34,7 @@
       box-sizing: inherit;
     }
     .hero {
-      background-image: url('/hero-desktop.webp');
+      background-image: url('/hero-desktop-light.webp');
       background-color: #333;
       background-size: cover;
       background-position: center;
@@ -52,15 +59,7 @@
         overflow-y: visible;
       }
     }
-    .overlay {
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(6px);
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
+    
     .content {
       position: relative;
       z-index: 2;
