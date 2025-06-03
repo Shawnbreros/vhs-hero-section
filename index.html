@@ -5,16 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reno Sparks Cash 4 Homes - Hero Section</title>
 
-  <!-- ✅ Preload Critical Images -->
+  <!-- ✅ Inline Device-Specific Preload -->
   <script>
-  const isMobile = window.innerWidth <= 768;
-  const preloadLink = document.createElement('link');
-  preloadLink.rel = 'preload';
-  preloadLink.as = 'image';
-  preloadLink.type = 'image/webp';
-  preloadLink.href = isMobile ? '/hero-mobile-light.webp' : '/hero-desktop-light.webp';
-  document.head.appendChild(preloadLink);
-</script>
+    document.write(`
+      <link rel="preload" as="image" href="${window.innerWidth <= 768 ? '/hero-mobile-light.webp' : '/hero-desktop-light.webp'}" type="image/webp">
+    `);
+  </script>
 
   <!-- ✅ Defer Non-Critical CSS -->
   <link rel="stylesheet" href="/css/styles.css" media="print" onload="this.media='all';">
@@ -34,7 +30,6 @@
       box-sizing: inherit;
     }
     .hero {
-      background-image: url('/hero-desktop-light.webp');
       background-color: #333;
       background-size: cover;
       background-position: center;
@@ -50,16 +45,23 @@
     }
     @media (max-width: 768px) {
       .hero {
-        background-image: url('/hero-mobile-light.webp');
+        background: none;
         height: auto;
         min-height: unset;
         max-height: unset;
         padding-top: 60px;
         padding-bottom: 60px;
         overflow-y: visible;
+        display: block;
+        text-align: center;
+      }
+      .hero img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: -4px;
       }
     }
-    
     .content {
       position: relative;
       z-index: 2;
@@ -70,6 +72,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
       width: 100%;
+      margin: 0 auto;
     }
     @media (max-width: 480px) {
       .content {
@@ -132,18 +135,25 @@
       }
     }
   </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAph155LwPyiddVb3hD2rsswQ0-PWp7bfU&libraries=places"></script>
+  <!-- ✅ Google Maps Places API -->
   <script>
-    function initAutocomplete() {
-      const addressInput = document.querySelector("input[name='address']");
-      if (addressInput) {
-        new google.maps.places.Autocomplete(addressInput, {
-          types: ['address'],
-          componentRestrictions: { country: 'us' }
-        });
-      }
-    }
-
+    window.addEventListener('DOMContentLoaded', () => {
+      const script = document.createElement('script');
+      script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAph155LwPyiddVb3hD2rsswQ0-PWp7bfU&libraries=places";
+      script.defer = true;
+      script.onload = () => {
+        const input = document.querySelector("input[name='address']");
+        if (input) {
+          new google.maps.places.Autocomplete(input, {
+            types: ['address'],
+            componentRestrictions: { country: 'us' }
+          });
+        }
+      };
+      document.head.appendChild(script);
+    });
+  </script>
+  <script>
     function formatPhoneNumber(input) {
       input.addEventListener('input', () => {
         let cleaned = input.value.replace(/\D/g, '');
@@ -154,15 +164,23 @@
         }
       });
     }
-
     window.addEventListener('load', () => {
-      initAutocomplete();
       const phoneInput = document.querySelector("input[name='phone']");
       if (phoneInput) {
         formatPhoneNumber(phoneInput);
       }
     });
   </script>
+</head>
+<body>
+  <div class="hero">
+    <!-- ✅ Inline Mobile Image for LCP on small screens -->
+    <script>
+      if (window.innerWidth <= 768) {
+        document.write('<img src="/hero-mobile-light.webp" alt="Reno Mid-Century Home" loading="eager" fetchpriority="high">');
+      }
+    </script>
+    <div class="content">
 </head>
 <body>
   <div class="hero">
